@@ -31,7 +31,7 @@ const checkOnlieStatus = async () => {
     const statuses = document.querySelectorAll('#status');
 
     if (chatBoxs === 0) {
-      return console.log('You have no friends to show!');0
+      return console.log('You have no friends to show!');
     }
 
     result.userFriends.forEach((friend, i) => {
