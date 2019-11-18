@@ -45,6 +45,8 @@
           </div>
       </div>
 
+      <input type="hidden" class="user-id" value="<%= user._id %>">
+
       <div class="chat-sidebarx">
         <div class="chat-sidebar">
           <% userFriends.reverse() %>
@@ -53,8 +55,7 @@
               <li class="li">
                 <a href="/messeges/<%= friend._id %>">
                   <div class="chatbar">
-                    <div class="chatnameboxp1"  id="chatnameboxp1">
-                      <input type="hidden" class="user-id" value="<%= user._id %>">
+                    <div class="chatnameboxp1" id="chatnameboxp1">                      
                       <input type="hidden" class="friend-id" value="<%= friend._id %>">
                       <div id="status" class="status offline"></div>
                       <img src="/<%= friend.profileImage %>" height="30" />
