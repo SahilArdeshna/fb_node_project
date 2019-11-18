@@ -1,0 +1,80 @@
+.notification-container {
+    font-size: 13px;
+    width: 800px;
+    margin-top: 90px;
+    color: #162643;
+    margin-left: 130px;
+}
+
+.notification h3 {
+    border-bottom: 1px solid #aaa;
+    padding-bottom: 15px;
+}
+
+.notif-user {
+    width: 100%;
+    background-color: #e9e9e9;
+    display: inline-block;
+}
+
+.user {
+    border-bottom: 1px solid #dddfe2;
+    padding: 6px 30px 15px 12px;
+    color: #000000;    
+}
+
+.notif-user span {
+    color: #162643;
+    font-size: 15px;
+}
+
+.user-img {
+    display: inline-block;
+}
+
+.user-img img {
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+}
+
+.notif-user-data {
+    display: inline-block;
+    position: absolute;
+    margin-left: 10px; 
+}
+.notif-user-data a {
+    color: #162643;
+    text-transform: capitalize;
+}
+
+.rej-acc {
+    display: flex;
+    width: 110px;
+}
+
+.rej-acc button {
+    width: 100%;
+    padding: 5px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+.rej-acc form:first-child {
+    margin-right: 5px;
+}
+
+.reject {
+    background-color: #fa8072;
+}
+
+.accept {
+    background-color: #90ee90;
+}
+
+.reject:hover {
+    background-color: #fa8072;
+}
+
+.accept:hover {
+    background-color: #90ee90;
+}

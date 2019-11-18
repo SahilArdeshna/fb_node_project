@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <%- include('../includes/head.ejs') %>
+  </head>
+  
+  <body>
+    <% if (isAuthenticated) { %>
+      <%- include('../includes/body.ejs') %>
+  
+      <div class="bodyn">
+        <a href="/admin/<%= user._id %>">
+          <div id="side1" class="bodyn">
+            <img src="<%= user.profileImage %>" id="profpic" />
+            <span><%= user.firstname %></span>
+          </div>
+        </a>
+        <div id="side3" class="bodyn">News feed</div>
+        <div id="side4" class="bodyn">Messages</div>
+        <div id="side5" class="bodyn">Events</div>
+        <div id="side6" class="bodyn">PAGES</div>
+        <div id="side7" class="bodyn">Pages feed</div>
+        <div id="side8" class="bodyn">Like pages</div>
+        <div id="side9" class="bodyn">Create page</div>
+        <div id="side10" class="bodyn">Create ad</div>
+        <div id="side11" class="bodyn">GROUPS</div>
+        <div id="side12" class="bodyn">New groups</div>
+        <div id="side13" class="bodyn">Create group</div>
+        <div id="side14" class="bodyn">APPS</div>
+        <div id="side15" class="bodyn">Games</div>
+        <div id="side16" class="bodyn">On this day</div>
+        <div id="side17" class="bodyn">Games feed</div>
+        <div id="side18" class="bodyn">FRIENDS</div>
+        <div id="side19" class="bodyn">Close friends</div>
+        <div id="side20" class="bodyn">Family</div>
+        <div id="side21" class="bodyn">INTERESTS</div>
+        <div id="side22" class="bodyn">Pages and public</div>
+        <div id="side23" class="bodyn">EVENTS</div>
+        <div id="side24" class="bodyn">Create event</div>
+      </div>
+  
+      
+      <div class="post">
+        <form action="/feed?_csrf=<%= csrfToken %>" method="POST" enctype="multipart/form-data"> 
+          <div id="column-1" class="post">
+            Create Post
+            <hr />
+            <br /><br /><br /><br /><br /><br />
+            <hr />
+            <input type="file" name="image">
+          </div>
+          <div id="postpos" class="post">             
+            <button type="submit" id="buttonpost">post</button>
+          </div>
+          <div id="postboxpos" class="post">
+            <textarea
+              placeholder="Write something here..."
+              id="postbox"
+              type="text"
+              name="text"
+            ></textarea>
+          </div>
+        </form>
+      </div>
+      
+      <% if (feeds.length > 0) { %> 
+        <% feeds.forEach(feed => { %>
+          <div class="post1">
+            <div class=feed>
+              <div class="clean-top">
+                <div class="flex">
+                  <img src="/<%= feed.user.profileImage %>" id="profpic-feed" />
+                  <div class="filter">
+                    <p3><%= feed.user.firstname %> <%= feed.user.surname %></p3
+                    ><p2>with</p2><p1>Arup Pegu</p1><p2>and</p2><p1>15 others.</p1>
+                  </div>
+                </div>
+                <div class="time">
+                  <p4><%= feed.createdTime %>.</p4>
+                </div>
+                <div id="feedText">
+                  <p><%= feed.text %></p>
+                </div>
+              </div>
+
+              <% if (feed.image.slice((feed.image.lastIndexOf(".") - 1 >>> 0) + 2) == 'mp4') { %>
+                <video class="post-image" src="<%= feed.image %>" controls></video>
+                <br /><br />
+              <% } else { %>
+                <img class="post-image" src="<%= feed.image %>" /><br /><br />
+              <% } %>
+
+              <div class="clean-bottom">
+                  <p6>Like Comment Share</p6><br />
+                  <hr />
+                  <!-- <p1>Amit Deb</p1><p2> and</p2><p1> 5 others</p1><p2> like this</p2> -->
+                  <% if (feed.comments.length > 0) { %>
+                    <% feed.comments.forEach(comment => { %>
+                      <% if (commentUserMap.has(comment.commenter.toString())) { %>
+                        <div class="comment-list">
+                          <div class="comment-image">
+                            <a href="/admin/<%= commentUserMap.get(comment.commenter.toString())._id %>">
+                              <img src="<%= commentUserMap.get(comment.commenter.toString()).profileImage %>" id="profpic" />
+                            </a>
+                          </div>
+                          <div class="comment-text">
+                            <a class="commenter-name" href="/admin/<%= commentUserMap.get(comment.commenter.toString())._id %>">
+                              <%= commentUserMap.get(comment.commenter.toString()).firstname %>
+                              <%= commentUserMap.get(comment.commenter.toString()).surname %>
+                            </a>
+                            <span><%= comment.text %></span>
+                          </div>
+                        </div>
+                      <% } %>
+                    <% }) %>
+                  <% } %>
+                  <div id="commentprof2">
+                    
+                    <div class="comment-image">
+                      <img src="<%= user.profileImage %>" id="profpic" />
+                    </div>
+                    <form class="commente-form" action="/comment" method="POST">
+                      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                      <input type="hidden" name="feedId" value="<%= feed._id %>">
+                      <input type="hidden" name="commenterId" value="<%= user._id %>">
+                      <input type="textarea" placeholder=" Write a comment..." name="comment" id="commentbox" required/>
+                      <button type="submit">Send</button>
+                    </form>
+                  </div>
+              </div>
+            </div>            
+          </div> 
+        <% }) %>
+      <% } else { %>
+        <h2>Upload feeds.</h2>
+      <% } %>
+    
+      <div class="sidebox">
+        <div id="sidebox1" class="sidebox">
+            <div id="sideboxx1">YOUR PAGES</div>
+            <hr />
+            <br /><br /><br />
+            <div class="see-all">See all</div>
+            <hr />
+            <div id="sideboxx2">This Week</div>
+            <br /><br /><br />
+            <div class="see-all">See all</div>
+            <hr />
+            <div id="sideboxx3">Recent Posts</div>
+            <br /><br /><br />
+            <div class="see-all">See all</div>
+            <hr />
+            <div id="sideboxx4">You haven't posted in this days</div>
+            <br /><br /><br /><br /><br /><br />
+            <div class="see-all">See all</div>
+        </div>
+      </div>
+
+      <input type="hidden" class="user-id" value="<%= user._id %>">
+    
+      <div class="chat-sidebarx">
+        <div class="chat-sidebar">
+          <% adminFriends.reverse() %>
+          <% if (adminFriends.length > 0) { %>
+            <% adminFriends.forEach(friend => { %>
+              <li class="li">
+                <a href="/messeges/<%= friend._id %>">
+                  <div class="chatbar">
+                    <div class="chatnameboxp1" id="chatnameboxp1">
+                      <input type="hidden" class="user-id" value="<%= user._id %>">
+                      <input type="hidden" class="friend-id" value="<%= friend._id %>">
+                      <div id="status" class="status offline"></div>
+                      <img src="<%= friend.profileImage %>" height="30" />
+                    </div>
+                    <div id="chatnamebox"><%= friend.firstname %> <%= friend.surname %></div>
+                  </div>
+                </a>
+              </li>
+            <% }) %>
+          <% } %>
+        </div>
+      </div>
+  
+      <div class="header10"></div>
+      
+    <% } else { %>
+      <h1>You are not authenticated! Please go back to login</h1>
+      <a style="color: black" href="/">FB Login Page</a>
+    <% } %>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/socket.js"></script>
+  </body>
+</html>

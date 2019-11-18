@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../includes/head.ejs') %>
+  </head>
+
+  <body>
+    <% if (isAuthenticated) { %>
+      <%- include('../includes/body.ejs') %>    
+
+      <div class="notification-container">
+          <div class="notification">
+              <h3>Your Notifications</h2>            
+              <% if (requestedUser.length > 0) { %>
+                <div class="notif-user">
+                  <% requestedUser.forEach(ru => { %>
+                    <div class="user">
+                      <div class="user-img">
+                        <a class="user-link" href="/admin/<%= ru._id %>">
+                            <img class="user-image-link" src="/<%= ru.profileImage %>">
+                        </a>
+                      </div>
+                      
+                      <div class="notif-user-data">
+                          <p>You have new friend request from: <span><a href="/admin/<%= ru._id %>"><%= ru.firstname %> <%= ru.surname %></a></span></p>
+                          <div class="rej-acc">
+                            <form action="/reject" method="POST">
+                              <input type="hidden" name="requesterId" value="<%= ru._id %>">
+                              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                              <button class="reject">Reject</button>                            
+                            </form>
+                            <form action="/accept" method="POST">
+                              <input type="hidden" name="requesterId" value="<%= ru._id %>">
+                              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                              <button class="accept">Accept</button>                            
+                            </form>
+                          </div>
+                      </div> 
+                    </div>           
+                  <% }) %>
+                </div>
+              <% } else { %>
+                  <h4>No notification found.</h4>
+              <% } %>
+          </div>
+      </div>
+
+      <div class="chat-sidebarx">
+        <div class="chat-sidebar">
+          <% userFriends.reverse() %>
+          <% if (userFriends.length > 0) { %>
+            <% userFriends.forEach(friend => { %>
+              <li class="li">
+                <a href="/messeges/<%= friend._id %>">
+                  <div class="chatbar">
+                    <div class="chatnameboxp1"  id="chatnameboxp1">
+                      <input type="hidden" class="user-id" value="<%= user._id %>">
+                      <input type="hidden" class="friend-id" value="<%= friend._id %>">
+                      <div id="status" class="status offline"></div>
+                      <img src="/<%= friend.profileImage %>" height="30" />
+                    </div>
+                    <div id="chatnamebox"><%= friend.firstname %> <%= friend.surname %></div>
+                  </div>                  
+                </a>
+              </li>
+            <% }) %>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="header10"></div>
+
+    <% } else { %>
+      <h1>You are not authenticated! Please go back to login</h1>
+      <a style="color: black" href="/">FB Login Page</a>
+    <% } %>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/socket.js"></script>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+.user-message {
+    margin: auto;
+    width: 90%;
+    border: 1px solid #4771fa;
+    padding: 0.5rem;
+    border-radius: 3px;
+    background: #b9c9ff;
+    text-align: center;
+  }
+  .user-message--error {
+    border-color: #ff0000;
+    background: #ffb0b0;
+    color: #ff0000;
+  }

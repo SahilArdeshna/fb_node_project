@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= title %></title>
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <link rel="stylesheet" type="text/css" href="css/error.css">
+</head>
+<body style="background-color:lightgrey">
+    <h2 style="padding:10px 2% 10px;background-color:#4c66a4 ;border: 0px solid black; border-radius:5px;">
+        <font color="white" face="arial" size="6">
+            <center>fb</center>
+        </font>
+    </h2>
+    <br>
+    <h5>
+        <center>
+            <font size="4" face="arial">Log into your FB account 
+        </center>
+    </h5>
+    <center>        
+    <table>
+        <tr>
+            <td>
+                <center>
+                    <% if (errorMessage) { %>
+                        <div class="user-message user-message--error"><%= errorMessage %></div>
+                    <% } %>
+                    <br><br>
+                    <form action="/login" method="POST">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <input type="email" id="name" name="email" value="<%= oldInput.emial %>" placeholder='Email'>
+                        <input type="password" id="email" name="password" value="<%= oldInput.password %>" placeholder='Facebook Password'>
+                        <br><br>
+                        <button type="submit">Log In</button>
+                    </form>
+                    <a class="goto-signup" href="/">New User?</a>
+                    <font face="times new roman" color="green">
+                        <br>
+                        <center>
+                </center>
+                </br>
+
+                <p1>
+                    <font color="black" size="4" face="arial">Create &nbsp;&nbsp;&nbsp;Account
+                </p1></br>&nbsp;&nbsp;&nbsp;
+                <p2>
+                    <font color="black" size="3" face="arial">Forget Password? &nbsp;-Help Center
+                </p2></br>
+
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

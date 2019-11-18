@@ -1,0 +1,73 @@
+const socket = io();
+
+const msgSender = document.querySelector(".user-id").value;
+
+let msgReceiver;
+const friendId = document.querySelector(".friend-id");
+if (friendId) {
+  msgReceiver = friendId.value; 
+}
+
+const friendsMap = new Map();
+
+socket.emit("join", { msgSender, msgReceiver }, async error => {
+  if (error) {
+    return console.log(error);
+  }
+});
+
+const checkOnlieStatus = async () => {
+  const data = await fetch(`https://fb-node-project.herokuapp.com/chatUser/${msgReceiver}`);
+  const result = await data.json();
+  if (!result) {
+    console.log("error: result not found!");
+  }
+
+  setInterval(() => {
+    socket.emit("checkUsersStatus", result.user.friends);
+  }, 1);
+
+  socket.on("onlineUsers", data => {
+    friendsMap.clear();
+    data.forEach(friend => {
+      friendsMap.set(friend, "status online");
+    });
+
+    const chatBoxs = document.querySelectorAll('.chatnameboxp1');
+    const statuses = document.querySelectorAll('#status');
+
+    if (chatBoxs === 0) {
+      return console.log('You have no friends to show!');0
+    }
+
+    result.userFriends.forEach((friend, i) => {
+      let html;
+
+      chatBoxs.forEach((chatBox, index) => {
+        if (index === i) {
+          if (friendsMap.has(friend._id)) {
+            html = `
+              <div id="status" class="status online"></div>
+            `;
+          } else {
+            html = `
+              <div id="status" class="status offline"></div>
+            `;
+          }
+
+          statuses.forEach((status, indx) => {
+            if (indx === i) {
+              if (status.parentNode) {
+                status.parentNode.removeChild(status);
+              }
+            }
+          });
+  
+          chatBox.insertAdjacentHTML('afterbegin', html);
+        }
+      });
+    });
+  });
+};
+
+checkOnlieStatus();
