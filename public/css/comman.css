@@ -187,8 +187,7 @@
 }
 .form {
     position: relative;
-    top: -4px;
-    left: 90px;
+    left: 300px;
 }
 .form button {
     width: 100px;
