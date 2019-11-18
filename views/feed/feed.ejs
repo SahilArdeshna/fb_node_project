@@ -72,8 +72,7 @@
                 <div class="flex">
                   <img src="/<%= feed.user.profileImage %>" id="profpic-feed" />
                   <div class="filter">
-                    <p3><%= feed.user.firstname %> <%= feed.user.surname %></p3
-                    ><p2>with</p2><p1>Arup Pegu</p1><p2>and</p2><p1>15 others.</p1>
+                    <p3><%= feed.user.firstname %> <%= feed.user.surname %></p3>
                   </div>
                 </div>
                 <div class="time">
@@ -94,7 +93,7 @@
               <div class="clean-bottom">
                   <p6>Like Comment Share</p6><br />
                   <hr />
-                  <!-- <p1>Amit Deb</p1><p2> and</p2><p1> 5 others</p1><p2> like this</p2> -->
+                  
                   <% if (feed.comments.length > 0) { %>
                     <% feed.comments.forEach(comment => { %>
                       <% if (commentUserMap.has(comment.commenter.toString())) { %>
