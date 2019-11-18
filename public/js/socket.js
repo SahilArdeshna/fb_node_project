@@ -10,12 +10,6 @@ if (friendId) {
 
 const friendsMap = new Map();
 
-socket.emit("join", { msgSender, msgReceiver }, async error => {
-  if (error) {
-    return console.log(error);
-  }
-});
-
 const checkOnlieStatus = async () => {
   const data = await fetch(`https://fb-node-project.herokuapp.com/chatUser/${msgReceiver}`);
   const result = await data.json();
@@ -70,4 +64,14 @@ const checkOnlieStatus = async () => {
   });
 };
 
-checkOnlieStatus();
+if (msgReceiver) {
+  // emit join
+  socket.emit("join", { msgSender, msgReceiver }, async error => {
+    if (error) {
+      return console.log(error);
+    }
+  });
+
+  // call check online status function
+  checkOnlieStatus();
+}
