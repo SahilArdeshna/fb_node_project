@@ -1,33 +1,48 @@
-<div class="header1">
-    <div id="img3" class="header1"><img src="/images/fb_logo.png" id="img3" /></div>
+<div class="body-header">
+  <div class="header1">
+    <div id="img3" class="header1">
+      <img src="/images/fb_logo.png" id="img3" />
+    </div>
     <div id="searcharea" class="header1">
-        <form action="/search" method="POST">
-            <div class="search__div">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <input placeholder="  Search name" type="text" id="searchbox" name="personname" />
-            </div>
-            <button type="submit">Search</button>
-        </form>
+      <form action="/search" method="POST">
+        <div class="search__div">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+          <input
+            placeholder="  Search name"
+            type="text"
+            id="searchbox"
+            name="personname"
+          />
+        </div>
+        <button type="submit">Search</button>
+      </form>
     </div>
     <div id="profilearea" class="header1">
-        <a href="/admin/<%= user._id %>"><img src="/<%= user.profileImage %>" id="profpic"/></a>
+      <a href="/admin/<%= user._id %>"
+        ><img src="/<%= user.profileImage %>" id="profpic"
+      /></a>
     </div>
     <div id="profilearea1" class="header1">
-        <a href="/admin/<%= user._id %>"><%= user.firstname %></a>
+      <a href="/admin/<%= user._id %>"><%= user.firstname %></a>
     </div>
     <div id="profilearea3" class="header1">|</div>
     <div id="profilearea4" class="header1"><a href="/feed">Home</a></div>
     <div id="profilearea5" class="header1">|</div>
-    <div id="findf" class="header1"><img src="/images/fb_friend_request.png" height="35" /></div>
-    <div id="message" class="header1"><img src="/images/messege_icon.png" height="20" /></div>
+    <!-- <div id="findf" class="header1"><img src="/images/fb_friend_request.png" height="35" /></div> -->
+    <!-- <div id="message" class="header1"><img src="/images/messege_icon.png" height="20" /></div> -->
     <div id="notification" class="header1">
-        <a href="/notification" class="notif"><% if (numOfNotification) { %><span class="num"><%= numOfNotification %></span><% } %></a>
+      <a href="/notification" class="notif"
+        ><% if (numOfNotification) { %><span class="num"
+          ><%= numOfNotification %></span
+        ><% } %></a
+      >
     </div>
     <div id="profilearea2" class="header1">|</div>
     <div id="logout" class="header1">
-        <form action="/logout" method="POST">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <button class="lg_btn" id="buttonpost" type="submit">Log Out</button>
-        </form>
+      <form action="/logout" method="POST">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <button class="lg_btn" id="buttonpost" type="submit">Log Out</button>
+      </form>
     </div>
+  </div>
 </div>
