@@ -1,149 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <%- include('../includes/head.ejs') %>
-</head>
+  </head>
 
-<body>
-    <% if (isAuthenticated) { %>
-        <%- include('../includes/body.ejs') %>
+  <body>
+    <% if (isAuthenticated) { %> <%- include('../includes/body.ejs') %>
 
-        <div class="bodyn">
-            <a href="/admin/<%= user._id %>">
-                <div id="side1" class="bodyn">
-                    <img src="<%= user.profileImage %>" id="profpic" />
-                    <span><%= user.firstname %></span>
+    <div class="body-content">
+      <div class="bodyn">
+        <a href="/admin/<%= user._id %>">
+          <div id="side1" class="bodyn">
+            <img src="<%= user.profileImage %>" id="profpic" />
+            <span><%= user.firstname %></span>
+          </div>
+        </a>
+        <div id="side3" class="bodyn">News feed</div>
+        <div id="side4" class="bodyn">Messages</div>
+        <div id="side5" class="bodyn">Events</div>
+        <div id="side6" class="bodyn">PAGES</div>
+        <div id="side7" class="bodyn">Pages feed</div>
+        <div id="side8" class="bodyn">Like pages</div>
+        <div id="side9" class="bodyn">Create page</div>
+        <div id="side10" class="bodyn">Create ad</div>
+        <div id="side11" class="bodyn">GROUPS</div>
+        <div id="side12" class="bodyn">New groups</div>
+        <div id="side13" class="bodyn">Create group</div>
+        <div id="side14" class="bodyn">APPS</div>
+        <div id="side15" class="bodyn">Games</div>
+        <div id="side16" class="bodyn">On this day</div>
+        <div id="side17" class="bodyn">Games feed</div>
+        <div id="side18" class="bodyn">FRIENDS</div>
+        <div id="side19" class="bodyn">Close friends</div>
+        <div id="side20" class="bodyn">Family</div>
+        <div id="side21" class="bodyn">INTERESTS</div>
+        <div id="side22" class="bodyn">Pages and public</div>
+        <div id="side23" class="bodyn">EVENTS</div>
+        <div id="side24" class="bodyn">Create event</div>
+      </div>
+
+      <div class="post">
+        <div class="people"><span>People</span></div>
+        <% if (usersFound.length > 0) { %> <% usersFound.forEach(uf => { %>
+        <div id="column-2">
+          <div class="friend-container">
+            <div class="user-image">
+              <a class="user-link" href="/admin/<%= uf._id %>">
+                <img class="user-image-link" src="<%= uf.profileImage %>" />
+              </a>
+            </div>
+            <div class="search-user-data">
+              <a href="/admin/<%= uf._id %>"
+                ><%= uf.firstname %> <%= uf.surname %></a
+              >
+            </div>
+            <div class="friend-request">
+              <% if (uf._id.toString() !== user._id.toString()) { %> <% if
+              (adminFriends.has(uf._id)) { %>
+              <form action="/unfriend" method="POST">
+                <input
+                  type="hidden"
+                  name="requesterId"
+                  value="<%= user._id %>"
+                />
+                <input type="hidden" name="requestToId" value="<%= uf._id %>" />
+                <input
+                  type="hidden"
+                  name="searchName"
+                  value="<%= searchName %>"
+                />
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                <button class="unfriend" type="submit">Unfriend</button>
+              </form>
+              <% } else if (requestedToUsers.has(uf._id)) { %>
+              <form action="/cancleRequest" method="POST">
+                <input
+                  type="hidden"
+                  name="requesterId"
+                  value="<%= user._id %>"
+                />
+                <input type="hidden" name="requestToId" value="<%= uf._id %>" />
+                <input
+                  type="hidden"
+                  name="searchName"
+                  value="<%= searchName %>"
+                />
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                <button class="friend-request-sent" type="submit">
+                  Cancel Friend Request
+                </button>
+              </form>
+              <% } else { %>
+              <form action="/sendRequest" method="POST">
+                <input
+                  type="hidden"
+                  name="requesterId"
+                  value="<%= user._id %>"
+                />
+                <input type="hidden" name="requestToId" value="<%= uf._id %>" />
+                <input
+                  type="hidden"
+                  name="searchName"
+                  value="<%= searchName %>"
+                />
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                <button class="add-friend" type="submit">Add Friend</button>
+              </form>
+              <% } %> <% } %>
+            </div>
+          </div>
+        </div>
+        <% }); %> <% } else { %>
+        <h1>No user found.</h1>
+        <% } %>
+      </div>
+
+      <input type="hidden" class="user-id" value="<%= user._id %>" />
+
+      <div class="chat-sidebarx">
+        <div class="chat-sidebar">
+          <% userFriends.reverse() %> <% if (userFriends.length > 0) { %> <%
+          userFriends.forEach(friend => { %>
+          <li class="li">
+            <a href="/messeges/<%= friend._id %>">
+              <div class="chatbar">
+                <div class="chatnameboxp1" id="chatnameboxp1">
+                  <input
+                    type="hidden"
+                    class="friend-id"
+                    value="<%= friend._id %>"
+                  />
+                  <div id="status" class="status offline"></div>
+                  <img src="/<%= friend.profileImage %>" height="30" />
                 </div>
+                <div id="chatnamebox">
+                  <%= friend.firstname %> <%= friend.surname %>
+                </div>
+              </div>
             </a>
-            <div id="side3" class="bodyn">News feed</div>
-            <div id="side4" class="bodyn">Messages</div>
-            <div id="side5" class="bodyn">Events</div>
-            <div id="side6" class="bodyn">PAGES</div>
-            <div id="side7" class="bodyn">Pages feed</div>
-            <div id="side8" class="bodyn">Like pages</div>
-            <div id="side9" class="bodyn">Create page</div>
-            <div id="side10" class="bodyn">Create ad</div>
-            <div id="side11" class="bodyn">GROUPS</div>
-            <div id="side12" class="bodyn">New groups</div>
-            <div id="side13" class="bodyn">Create group</div>
-            <div id="side14" class="bodyn">APPS</div>
-            <div id="side15" class="bodyn">Games</div>
-            <div id="side16" class="bodyn">On this day</div>
-            <div id="side17" class="bodyn">Games feed</div>
-            <div id="side18" class="bodyn">FRIENDS</div>
-            <div id="side19" class="bodyn">Close friends</div>
-            <div id="side20" class="bodyn">Family</div>
-            <div id="side21" class="bodyn">INTERESTS</div>
-            <div id="side22" class="bodyn">Pages and public</div>
-            <div id="side23" class="bodyn">EVENTS</div>
-            <div id="side24" class="bodyn">Create event</div>
+          </li>
+          <% }) %> <% } %>
         </div>
+      </div>
+    </div>
 
-        <div class="post">
-            <div class="people"><span>People</span></div>
-            <% if (usersFound.length > 0) { %>
-                <% usersFound.forEach(uf => { %>
-                    <div id="column-2">
-                        <div class="friend-container">
-                            <div class="user-image">
-                                <a class="user-link" href="/admin/<%= uf._id %>">
-                                    <img class="user-image-link" src="<%= uf.profileImage %>">
-                                </a>
-                            </div>
-                            <div class="search-user-data">
-                                <a href="/admin/<%= uf._id %>"><%= uf.firstname %> <%= uf.surname %></a>
-                            </div>
-                            <div class="friend-request">
-                                <% if (uf._id.toString() !== user._id.toString()) { %>
-                                    <% if (adminFriends.has(uf._id)) { %>
-                                        <form action="/unfriend" method="POST">
-                                            <input type="hidden" name="requesterId" value="<%= user._id %>">
-                                            <input type="hidden" name="requestToId" value="<%= uf._id %>">
-                                            <input type="hidden" name="searchName" value="<%= searchName %>">
-                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                            <button class="unfriend" type="submit">Unfriend</button>
-                                        </form>
-                                    <% } else if (requestedToUsers.has(uf._id)) { %>
-                                        <form action="/cancleRequest" method="POST">
-                                            <input type="hidden" name="requesterId" value="<%= user._id %>">
-                                            <input type="hidden" name="requestToId" value="<%= uf._id %>">
-                                            <input type="hidden" name="searchName" value="<%= searchName %>">
-                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                            <button class="friend-request-sent" type="submit">Cancel Friend Request</button>
-                                        </form>
-                                    <% } else { %>
-                                        <form action="/sendRequest" method="POST">
-                                            <input type="hidden" name="requesterId" value="<%= user._id %>">
-                                            <input type="hidden" name="requestToId" value="<%= uf._id %>">
-                                            <input type="hidden" name="searchName" value="<%= searchName %>">
-                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                            <button class="add-friend" type="submit">Add Friend</button>
-                                        </form> 
-                                    <% } %>
-                                <% } %>                     
-                            </div>
-                        </div>
-                    </div>
-                <% }); %>
-        <% } else { %>
-            <h1>No user found.</h1>
-            <% } %>
-        </div>
-
-        <div class="sidebox">
-            <div id="sidebox1" class="sidebox">
-                <div id="sideboxx1">YOUR PAGES</div>
-                <hr />
-                <br /><br /><br />
-                <div class="see-all">See all</div>
-                <hr />
-                <div id="sideboxx2">This Week</div>
-                <br /><br /><br />
-                <div class="see-all">See all</div>
-                <hr />
-                <div id="sideboxx3">Recent Posts</div>
-                <br /><br /><br />
-                <div class="see-all">See all</div>
-                <hr />
-                <div id="sideboxx4">You haven't posted in this days</div>
-                <br /><br /><br /><br /><br /><br />
-                <div class="see-all">See all</div>
-            </div>
-        </div>
-
-        <input type="hidden" class="user-id" value="<%= user._id %>">
-
-        <div class="chat-sidebarx">
-            <div class="chat-sidebar">
-                <% userFriends.reverse() %>
-                <% if (userFriends.length > 0) { %>
-                    <% userFriends.forEach(friend => { %>
-                        <li class="li">
-                            <a href="/messeges/<%= friend._id %>">
-                                <div class="chatbar">
-                                        <div class="chatnameboxp1" id="chatnameboxp1">
-                                            <input type="hidden" class="friend-id" value="<%= friend._id %>">
-                                            <div id="status" class="status offline"></div>
-                                            <img src="/<%= friend.profileImage %>" height="30" />
-                                        </div>
-                                    <div id="chatnamebox"><%= friend.firstname %> <%= friend.surname %></div>
-                                </div>                  
-                            </a>
-                        </li>
-                    <% }) %>
-                <% } %>
-            </div>
-        </div>
-
-        <div class="header10"></div>
+    <div class="header10"></div>
     <% } else { %>
-        <h1>You are not authenticated! Please go back to login</h1>
-        <a style="color: black" href="/">FB Login Page</a>
+    <h1>You are not authenticated! Please go back to login</h1>
+    <a style="color: black" href="/">FB Login Page</a>
     <% } %>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/socket.js"></script>
-</body>
-
+  </body>
 </html>

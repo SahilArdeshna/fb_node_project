@@ -1,100 +1,100 @@
 .frnpad {
-    display: block;
+  display: block;
 }
 
-.active{
-    background:#e9f0f2; 
+.active {
+  background: #e9f0f2;
 }
 
-.frnpad{
-    left:100px;
-    top:440px;
-    background:white;
-    height:auto;
-    width:850px;
-    position:absolute;
+.frnpad {
+  left: 100px;
+  top: 440px;
+  background: white;
+  height: auto;
+  width: 850px;
+  position: absolute;
 }
 
 .top {
-    height: 85px;
-    background-color: #f5f6f7;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #d3d6db;
+  height: 85px;
+  background-color: #f5f6f7;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #d3d6db;
 }
 
 .top h3 {
-    margin: 0px;
-    font-size: 20px;
+  margin: 0px;
+  font-size: 20px;
 }
 
 .top-div {
-    width: 150px;
-    padding-left: 20px;
-    padding-top: 20px;
+  width: 150px;
+  padding-left: 20px;
+  padding-top: 20px;
 }
 
 .header-friend img {
-    margin-right: 2px;
-    vertical-align: middle;
+  margin-right: 2px;
+  vertical-align: middle;
 }
 
 .header-friend a {
-    color: #4b4f56;
-    vertical-align: middle;
+  color: #4b4f56;
+  vertical-align: middle;
 }
 
 .header-friend a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .friend-list {
-    width: 100%;
+  width: 100%;
 }
 
 .friends {
-    padding-right: 13px;
-    padding-left: 13px;
+  padding-right: 13px;
+  padding-left: 13px;
 }
 
 ul {
-    margin: 0px;
-    padding: 0px;
-    list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+  list-style-type: none;
 }
 
 .single-friend {
-    width: 47%;
-    display: inline-flex;
-    margin: 0 0 13px 13px;
-    border: 1px solid #e9ebee;
+  width: 47%;
+  display: inline-flex;
+  margin: 0 0 13px 13px;
+  border: 1px solid #e9ebee;
 }
 
 .friends-container {
-    display: flex;
-    height: 100px;
+  display: flex;
+  height: 100px;
 }
 
 .friends-container div:nth-child(2),
 .friends-container div:last-child {
-    margin-top: 40px;
+  margin-top: 40px;
 }
 
 .user-data {
-    width: 125px;
+  width: 125px;
 }
 
-.user__image img {    
-    width: 100px;
-    height: 100px;
+.user__image img {
+  width: 100px;
+  height: 100px;
 }
 
 .user-data a {
-    width: auto;
-    margin-left: 20px;
-    text-align: center;
-    color: #4267B2;
+  width: auto;
+  margin-left: 20px;
+  text-align: center;
+  color: #4267b2;
 }
 
-.friend-request {
+/* .friend-request {
     padding-left: 70px;
-}
+} */

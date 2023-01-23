@@ -78,8 +78,6 @@ const search = async (searchName, adminId) => {
       });
     }
 
-    console.log("users", users);
-
     const friendRequests = await FriendRequest.find({
       requester: adminId,
       status: "requested",
