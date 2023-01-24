@@ -41,21 +41,23 @@
         <div class="username">
           <%= visitedUser.firstname %> <%= visitedUser.surname %>
         </div>
-        <a href="/admin/<%= visitedUser._id %>">
-          <div class="box11 active">Timeline</div>
-        </a>
-        <div class="box12">About</div>
-        <a href="/admin/<%= visitedUser._id %>/friends">
-          <div class="box13">Friends</div>
-        </a>
-        <div class="box14">Photos</div>
+        <div class="admin-extra">
+          <a href="/admin/<%= visitedUser._id %>">
+            <div class="box11 active">Timeline</div>
+          </a>
+          <!-- <div class="box12">About</div> -->
+          <a href="/admin/<%= visitedUser._id %>/friends">
+            <div class="box13">Friends</div>
+          </a>
+          <!-- <div class="box14">Photos</div> -->
 
-        <select>
-          <option selected>More</option>
-          <option value="saab">Videos</option>
-          <option value="opel">Places</option>
-          <option value="audi">Pages</option>
-        </select>
+          <!-- <select>
+            <option value="more" selected>More</option>
+            <option value="videos">Videos</option>
+            <option value="places">Places</option>
+            <option value="pages">Pages</option>
+          </select> -->
+        </div>
       </div>
 
       <input type="hidden" class="user-id" value="<%= user._id %>" />
@@ -73,7 +75,7 @@
             <hr />
             <input type="file" name="image" />
           </div>
-          <div id="postpos" class="postp">
+          <div id="postpos" class="">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
             <button type="submit" id="buttonpost">Post</button>
           </div>
@@ -191,10 +193,10 @@
         </div>
       </div>
       <% }) %> <% } else { %>
-      <h1>No feeds uploaded!</h1>
+      <h1 class="feed-h1">No feeds uploaded!</h1>
       <% } %>
 
-      <div class="aboutpad">about</div>
+      <!-- <div class="aboutpad">about</div>
       <div class="aboutpadx"></div>
 
       <div class="abox1x"></div>
@@ -205,7 +207,7 @@
 
       <div class="phpad">photo</div>
 
-      <div class="phpadx"></div>
+      <div class="phpadx"></div> -->
     </div>
 
     <% } else { %>
