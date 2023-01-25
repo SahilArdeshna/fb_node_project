@@ -265,6 +265,7 @@ a.notif {
 #column-1 input {
   top: 178px;
   position: absolute;
+  z-index: 10;
 }
 #postpos {
   /* left: 450px; */
@@ -320,7 +321,7 @@ a.notif {
   flex-direction: column;
 }
 .post {
-  /* width: 560px; */
+  width: 560px;
   height: 210px;
 }
 .post-form {

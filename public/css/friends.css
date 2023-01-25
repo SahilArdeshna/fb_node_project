@@ -7,18 +7,14 @@
 }
 
 .frnpad {
-  left: 100px;
-  top: 440px;
   background: white;
   height: auto;
-  width: 850px;
-  position: absolute;
+  width: 60%;
+  margin: 0 auto;
 }
 
 .top {
-  height: 85px;
   background-color: #f5f6f7;
-  margin-bottom: 20px;
   border-bottom: 1px solid #d3d6db;
 }
 
@@ -29,8 +25,7 @@
 
 .top-div {
   width: 150px;
-  padding-left: 20px;
-  padding-top: 20px;
+  padding: 20px;
 }
 
 .header-friend img {
@@ -51,11 +46,6 @@
   width: 100%;
 }
 
-.friends {
-  padding-right: 13px;
-  padding-left: 13px;
-}
-
 ul {
   margin: 0px;
   padding: 0px;
@@ -65,18 +55,17 @@ ul {
 .single-friend {
   width: 47%;
   display: inline-flex;
-  margin: 0 0 13px 13px;
+  margin: 13px;
   border: 1px solid #e9ebee;
 }
 
 .friends-container {
   display: flex;
   height: 100px;
-}
-
-.friends-container div:nth-child(2),
-.friends-container div:last-child {
-  margin-top: 40px;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .user-data {
@@ -90,11 +79,11 @@ ul {
 
 .user-data a {
   width: auto;
-  margin-left: 20px;
   text-align: center;
   color: #4267b2;
 }
 
-/* .friend-request {
-    padding-left: 70px;
-} */
+.friend-request,
+.friend-request button {
+  padding: 5px;
+}

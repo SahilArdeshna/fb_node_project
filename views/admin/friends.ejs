@@ -1,127 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <%- include('../includes/head.ejs') %>    
-  </head>
 
-  <body>
-    <% if (isAuthenticated) { %>
-      <%- include('../includes/body.ejs') %>
+<head>
+  <%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+  <% if (isAuthenticated) { %> <%- include('../includes/body.ejs') %>
 
       <div class="header0001"></div>
 
-      <div class="coverpad">
-        <img src="/<%= user.coverImage %>" width="850px" />
-      </div>
-      <div class="coverpadx">
-        <form action="/coverImage" method="POST" enctype="multipart/form-data">
-          <input type="file" name="coverImage" />
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          <button type="submit">Upload</button>
-        </form>
-      </div>
+      <div class="admin-content">
+        <div class="top-content">
+          <div class="coverpad">
+            <img src="/<%= user.coverImage %>" width="850px" />
+          </div>
+          <div class="coverpadx">
+            <form action="/coverImage" method="POST" enctype="multipart/form-data">
+              <input type="file" name="coverImage" />
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <button type="submit">Upload</button>
+            </form>
+          </div>
 
-      <div class="profilepic">
-        <img src="/<%= user.profileImage %>" height="140px" />
-      </div>
-      <div class="profilepicx">
-        <form action="/profileImage" method="POST" enctype="multipart/form-data">
-          <input type="file" name="profileImage" />
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          <button type="submit">Upload</button>
-        </form>
-      </div>
-      <div class="username"><%= firstname %> <%= surname %></div>
-      <a href="/admin/<%= user._id %>">
-          <div class="box11">Timeline </div>
-      </a>
-      <div class="box12">About</div>
-      <a href="/admin/<%= user._id %>/friends">
-          <div class="box13 active">Friends</div>
-      </a>
-      <div class="box14">Photos</div>
+          <div class="profilepic">
+            <img src="/<%= user.profileImage %>" height="140px" />
+          </div>
+          <div class="profilepicx">
+            <form action="/profileImage" method="POST" enctype="multipart/form-data">
+              <input type="file" name="profileImage" />
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <button type="submit">Upload</button>
+            </form>
+          </div>
+          <div class="username">
+            <%= firstname %>
+              <%= surname %>
+          </div>
+          <div class="admin-extra">
+            <a href="/admin/<%= user._id %>">
+              <div class="box11">Timeline</div>
+            </a>
+            <!-- <div class="box12">About</div> -->
+            <a href="/admin/<%= user._id %>/friends">
+              <div class="box13 active">Friends</div>
+            </a>
+            <!-- <div class="box14">Photos</div> -->
 
-      <select>
-        <option selected>More</option>
-        <option value="saab">Videos</option>
-        <option value="opel">Places</option>
-        <option value="audi">Pages</option>
-      </select>
-      
-      <input type="hidden" class="user-id" value="<%= user._id %>">
+            <!-- <select>
+              <option selected>More</option>
+              <option value="saab">Videos</option>
+              <option value="opel">Places</option>
+              <option value="audi">Pages</option>
+            </select> -->
+          </div>
+        </div>
 
-      <div class="chat-sidebarx">
-        <div class="chat-sidebar">
-          <% userFriends.reverse() %>
-          <% if (userFriends.length > 0) { %>
-            <% userFriends.forEach(friend => { %>
-              <li class="li">
-                <a href="/messeges/<%= friend._id %>">
-                  <div class="chatbar">
-                      <div class="chatnameboxp1" id="chatnameboxp1">                        
-                        <input type="hidden" class="friend-id" value="<%= friend._id %>">
-                        <div id="status" class="status offline"></div>
-                        <img src="/<%= friend.profileImage %>" height="30" />
+        <input type="hidden" class="user-id" value="<%= user._id %>" />
+
+        <div class="frnpad">
+          <div class="top">
+            <div class="top-div">
+              <h3 class="header-friend">
+                Friends
+              </h3>
+            </div>
+          </div>
+          <div class="friend-list">
+            <div class="friends">
+              <ul class="all-friends">
+                <% if (userFriends.length> 0) { %> <% userFriends.forEach(friend=> { %>
+                    <li class="single-friend">
+                      <div class="friends-container">
+                        <div class="user__image">
+                          <a class="user-link" href="/admin/<%= friend._id %>">
+                            <img class="user-image-link" src="/<%= friend.profileImage %>" />
+                          </a>
+                        </div>
+                        <div class="user-data">
+                          <a href="/admin/<%= friend._id %>">
+                            <%= friend.firstname %>
+                              <%= friend.surname %>
+                          </a>
+                        </div>
+                        <div class="friend-request">
+                          <form action="/unfriend" method="POST">
+                            <input type="hidden" name="requesterId" value="<%= user._id %>" />
+                            <input type="hidden" name="requestToId" value="<%= friend._id %>" />
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                            <button class="unfriend" type="submit">Unfriend</button>
+                          </form>
+                        </div>
                       </div>
-                    <div id="chatnamebox"><%= friend.firstname %> <%= friend.surname %></div>
-                  </div>                  
-                </a>
-              </li>
-            <% }) %>
-          <% } %>
+                    </li>
+                    <% }) %>
+                      <% } else { %>
+                        <h3>You have no friends to show.</h3>
+                        <% } %>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="frnpad">
-          <div class="top">
-              <div class="top-div">
-                  <h3 class="header-friend">
-                      <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yR/r/KQzTkfPSg-x.png">
-                      <a href="/admin/<%= user._id %>/friends">Friends</a>
-                  </h3>
-              </div>
-          </div>
-          <div class="friend-list">
-              <div class="friends">
-                  <ul class="all-friends">
-                      <% if (userFriends.length > 0) { %>
-                          <% userFriends.forEach(friend => { %>
-                              <li class="single-friend">
-                                  <div class="friends-container">
-                                      <div class="user__image">
-                                          <a class="user-link" href="/admin/<%= friend._id %>">
-                                              <img class="user-image-link" src="/<%= friend.profileImage %>">
-                                          </a>
-                                      </div>
-                                      <div class="user-data">
-                                          <a href="/admin/<%= friend._id %>"><%= friend.firstname %> <%= friend.surname %></a>
-                                      </div>
-                                      <div class="friend-request">
-                                          <form action="/unfriend" method="POST">
-                                              <input type="hidden" name="requesterId" value="<%= user._id %>">
-                                              <input type="hidden" name="requestToId" value="<%= friend._id %>">
-                                              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                              <button class="unfriend" type="submit">Unfriend</button>
-                                          </form>
-                                      </div>   
-                                  </div>
-                              </li>
-                          <% }) %>
-                      <% } else { %>
-                          <h3>You have no friends to show.</h3>
-                      <% } %>
-                  </ul>
-              </div>
-          </div>
-      </div>
-
       <script src="/js/admin.js"></script>
-    <% } else { %>
-      <h1>You are not authenticated! Please go back to login</h1>
-      <a style="color: black" href="/">FB Login Page</a>
-    <% } %>
+      <% } else { %>
+        <h1>You are not authenticated! Please go back to login</h1>
+        <a style="color: black" href="/">FB Login Page</a>
+        <% } %>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/socket.js"></script>
-  </body>
+          <script src="/socket.io/socket.io.js"></script>
+          <script src="/js/socket.js"></script>
+</body>
+
 </html>
