@@ -20,9 +20,11 @@ exports.search = async (req, res, next) => {
       requestedToUsers: obj.requestedToUsers,
       searchName,
       usersFound: obj.users,
+      appUrl: process.env.APP_URL,
       userFriends: obj.userFriends,
       adminFriends: obj.adminFriends,
       numOfNotification: obj.numOfNotification,
+      defaultImage: "images/profile-images/default-profile.png",
     });
   } catch (err) {
     const error = new Error(err);
@@ -43,9 +45,11 @@ exports.getSearch = async (req, res, next) => {
       requestedToUsers: obj.requestedToUsers,
       searchName,
       usersFound: obj.users,
+      appUrl: process.env.APP_URL,
       userFriends: obj.userFriends,
       adminFriends: obj.adminFriends,
       numOfNotification: obj.numOfNotification,
+      defaultImage: "images/profile-images/default-profile.png",
     });
   } catch (err) {
     const error = new Error(err);

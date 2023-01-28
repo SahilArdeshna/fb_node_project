@@ -1,11 +1,11 @@
-const fs = require('fs');
+const fs = require("fs");
 
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const User = require("../models/User");
 const Feed = require("../models/Feed");
 const feedTimeChange = require("../utils/feedTime");
-const { createImage } = require('../utils/createImage');
+const { createImage } = require("../utils/createImage");
 
 exports.getProfile = async (req, res, next) => {
   try {
@@ -47,7 +47,7 @@ exports.getProfile = async (req, res, next) => {
       }
     }
 
-    const roomId = new mongoose.Types.ObjectId;
+    const roomId = new mongoose.Types.ObjectId();
 
     res.render("admin/admin", {
       title: `${req.user.firstname} ${req.user.surname}`,
@@ -58,7 +58,9 @@ exports.getProfile = async (req, res, next) => {
       visitedUser: user,
       user: admin,
       userFriends: users,
-      feeds: updatedFeeds
+      feeds: updatedFeeds,
+      appUrl: process.env.APP_URL,
+      defaultImage: "images/profile-images/default-profile.png",
     });
   } catch (err) {
     const error = new Error(err);
@@ -72,19 +74,19 @@ exports.deleteFeed = async (req, res, next) => {
 
   const user = await User.findById(req.user._id);
   if (!user) {
-    const error = new Error('User not found!');
+    const error = new Error("User not found!");
     error.statusCode = 404;
     throw error;
   }
 
-  let feed = await Feed.findOne({_id: feedId, user: user._id});
+  let feed = await Feed.findOne({ _id: feedId, user: user._id });
   if (!feed) {
     error.statusCode = 404;
     throw error;
   }
 
   fs.unlinkSync(feed.image);
-  const filterFeeds = user.feeds.filter(feed => {
+  const filterFeeds = user.feeds.filter((feed) => {
     if (feed.toString() !== feedId.toString()) {
       return feed;
     }
@@ -93,7 +95,7 @@ exports.deleteFeed = async (req, res, next) => {
   user.feeds = filterFeeds;
   await user.save();
   await feed.remove();
-  
+
   res.redirect(`/admin/${req.user._id}`);
 };
 
@@ -120,9 +122,15 @@ exports.postCoverImage = async (req, res, next) => {
     const width = 850;
     const height = 360;
     let time = new Date().toISOString();
-    const path = 'cover-images';
+    const path = "cover-images";
 
-    const resizeImage = await createImage(coverImage, path, width, height, time);
+    const resizeImage = await createImage(
+      coverImage,
+      path,
+      width,
+      height,
+      time
+    );
     if (resizeImage) {
       user.coverImage = `images/${path}/${time}-${coverImage.originalname}`;
       await user.save();
@@ -131,7 +139,6 @@ exports.postCoverImage = async (req, res, next) => {
     } else {
       throw Error();
     }
-
   } catch (err) {
     const error = new Error(err);
     error.statusCode = 500;
@@ -162,18 +169,17 @@ exports.postProfileImage = async (req, res, next) => {
     const width = 140;
     const height = 140;
     let time = new Date().toISOString();
-    const path = 'profile-images';
+    const path = "profile-images";
 
     const resizeImage = await createImage(image, path, width, height, time);
     if (resizeImage) {
       user.profileImage = `images/${path}/${time}-${image.originalname}`;
       await user.save();
 
-      res.redirect(`/admin/${user._id}`);      
+      res.redirect(`/admin/${user._id}`);
     } else {
       throw Error();
     }
-
   } catch (err) {
     const error = new Error(err);
     error.statusCode = 500;
@@ -211,7 +217,9 @@ exports.friends = async (req, res, next) => {
       surname: user.surname,
       userFriends: users,
       adminFriends,
-      numOfNotification
+      numOfNotification,
+      appUrl: process.env.APP_URL,
+      defaultImage: "images/profile-images/default-profile.png",
     });
   } catch (err) {
     const error = new Error(err);

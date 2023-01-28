@@ -26,7 +26,7 @@
         </div>
 
         <div class="profilepic">
-          <img src="/<%= visitedUser.profileImage %>" />
+          <img src="/<%= visitedUser.profileImage || defaultImage %>" />
         </div>
         <div class="profilepicx">
           <form
@@ -90,109 +90,120 @@
         </form>
       </div>
 
-      <% if (feeds.length > 0) { %> <% feeds.forEach(feed => { %>
-      <div class="post1px">
-        <div class="feed">
-          <div class="clean-top">
-            <div class="flex">
-              <img src="/<%= feed.user.profileImage %>" id="profpic-feed" />
-              <div class="filter">
-                <p3><%= feed.user.firstname %> <%= feed.user.surname %></p3>
-                <% if (showDeleteBtn) { %>
-                <div class="form">
-                  <form
-                    action="/admin/<%= user._id %>/deleteFeed"
-                    method="POST"
-                  >
-                    <input
-                      type="hidden"
-                      name="_csrf"
-                      value="<%= csrfToken %>"
-                    />
-                    <input
-                      type="hidden"
-                      name="feedId"
-                      value="<%= feed._id %>"
-                    />
-                    <button type="submit">Delete Post</button>
-                  </form>
+      <% if (feeds.length> 0) { %>
+      <div class="admin-posts">
+        <% feeds.forEach(feed=> { %>
+        <div class="post1px">
+          <div class="">
+            <div class="clean-top">
+              <div class="flex">
+                <img
+                  src="/<%= feed.user.profileImage || defaultImage %>"
+                  id="profpic-feed"
+                />
+                <div class="filter">
+                  <p3> <%= feed.user.firstname %> <%= feed.user.surname %> </p3>
+                  <% if (showDeleteBtn) { %>
+                  <div class="form">
+                    <form
+                      action="/admin/<%= user._id %>/deleteFeed"
+                      method="POST"
+                    >
+                      <input
+                        type="hidden"
+                        name="_csrf"
+                        value="<%= csrfToken %>"
+                      />
+                      <input
+                        type="hidden"
+                        name="feedId"
+                        value="<%= feed._id %>"
+                      />
+                      <button type="submit">Delete Post</button>
+                    </form>
+                  </div>
+                  <% } %>
                 </div>
-                <% } %>
+              </div>
+              <div class="time">
+                <p4> <%= feed.createdTime %>. </p4>
+              </div>
+              <div id="feedText">
+                <p><%= feed.text %></p>
               </div>
             </div>
-            <div class="time">
-              <p4><%= feed.createdTime %>.</p4>
-            </div>
-            <div id="feedText">
-              <p><%= feed.text %></p>
-            </div>
-          </div>
 
-          <% if (feed.image.slice((feed.image.lastIndexOf(".") - 1 >>> 0) + 2)
-          == 'mp4') { %>
-          <video class="post-image" src="/<%= feed.image %>" controls></video>
-          <br /><br />
-          <% } else { %>
-          <img class="post-image" src="/<%= feed.image %>" /><br /><br />
-          <% } %>
+            <% if (feed.image.slice((feed.image.lastIndexOf(".") - 1>>> 0) + 2)
+            == 'mp4') { %>
+            <video class="post-image" src="/<%= feed.image %>" controls></video>
+            <br /><br />
+            <% } else { %>
+            <img class="post-image" src="/<%= feed.image %>" /><br /><br />
+            <% } %>
 
-          <div class="clean-bottom">
-            <p6>Like Comment Share</p6><br />
-            <hr />
+            <div class="clean-bottom">
+              <p6>Like Comment Share</p6><br />
+              <hr />
 
-            <% if (feed.comments.length > 0) { %> <%
-            feed.comments.forEach(comment => { %> <% if
-            (commentUserMap.has(comment.commenter.toString())) { %>
-            <div class="comment-list">
-              <div class="comment-image">
-                <a
-                  href="/admin/<%= commentUserMap.get(comment.commenter.toString())._id %>"
-                >
+              <% if (feed.comments.length> 0) { %> <%
+              feed.comments.forEach(comment=> { %> <% if
+              (commentUserMap.has(comment.commenter.toString())) { %>
+              <div class="comment-list">
+                <div class="comment-image">
+                  <a
+                    href="/admin/<%= commentUserMap.get(comment.commenter.toString())._id %>"
+                  >
+                    <img
+                      src="/<%= commentUserMap.get(comment.commenter.toString()).profileImage || defaultImage %>"
+                      id="profpic"
+                    />
+                  </a>
+                </div>
+                <div class="comment-text">
+                  <a
+                    class="commenter-name"
+                    href="/admin/<%= commentUserMap.get(comment.commenter.toString())._id %>"
+                  >
+                    <%=
+                    commentUserMap.get(comment.commenter.toString()).firstname
+                    %> <%=
+                    commentUserMap.get(comment.commenter.toString()).surname %>
+                  </a>
+                  <span> <%= comment.text %> </span>
+                </div>
+              </div>
+              <% } %> <% }) %> <% } %>
+              <div id="commentprof2">
+                <div class="comment-image">
                   <img
-                    src="/<%= commentUserMap.get(comment.commenter.toString()).profileImage %>"
+                    src="/<%= user.profileImage || defaultImage %>"
                     id="profpic"
                   />
-                </a>
+                </div>
+                <form class="commente-form" action="/comment" method="POST">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                  <input type="hidden" name="feedId" value="<%= feed._id %>" />
+                  <input
+                    type="hidden"
+                    name="commenterId"
+                    value="<%= user._id %>"
+                  />
+                  <input
+                    type="textarea"
+                    placeholder=" Write a comment..."
+                    name="comment"
+                    id="commentbox"
+                    required
+                  />
+                  <button type="submit">Send</button>
+                </form>
               </div>
-              <div class="comment-text">
-                <a
-                  class="commenter-name"
-                  href="/admin/<%= commentUserMap.get(comment.commenter.toString())._id %>"
-                >
-                  <%= commentUserMap.get(comment.commenter.toString()).firstname
-                  %> <%=
-                  commentUserMap.get(comment.commenter.toString()).surname %>
-                </a>
-                <span><%= comment.text %></span>
-              </div>
-            </div>
-            <% } %> <% }) %> <% } %>
-            <div id="commentprof2">
-              <div class="comment-image">
-                <img src="/<%= user.profileImage %>" id="profpic" />
-              </div>
-              <form class="commente-form" action="/comment" method="POST">
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-                <input type="hidden" name="feedId" value="<%= feed._id %>" />
-                <input
-                  type="hidden"
-                  name="commenterId"
-                  value="<%= user._id %>"
-                />
-                <input
-                  type="textarea"
-                  placeholder=" Write a comment..."
-                  name="comment"
-                  id="commentbox"
-                  required
-                />
-                <button type="submit">Send</button>
-              </form>
             </div>
           </div>
         </div>
+        <% }) %>
       </div>
-      <% }) %> <% } else { %>
+      <% } else { %>
       <h1 class="feed-h1">No feeds uploaded!</h1>
       <% } %>
 
@@ -216,6 +227,10 @@
     <% } %>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/socket.js"></script>
+    <script
+      src="/js/socket.js"
+      id="socket-script"
+      data-appUrl="<%= appUrl %>"
+    ></script>
   </body>
 </html>

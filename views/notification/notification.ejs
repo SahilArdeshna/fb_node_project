@@ -18,7 +18,7 @@
                   <div class="user">
                     <div class="user-img">
                       <a class="user-link" href="/admin/<%= ru._id %>">
-                        <img class="user-image-link" src="/<%= ru.profileImage %>">
+                        <img class="user-image-link" src="/<%= ru.profileImage || defaultImage %>">
                       </a>
                     </div>
 
@@ -59,7 +59,7 @@
         <% } %>
 
           <script src="/socket.io/socket.io.js"></script>
-          <script src="/js/socket.js"></script>
+          <script src="/js/socket.js" id="socket-script" data-appUrl="<%= appUrl %>"></script>
 </body>
 
 </html>

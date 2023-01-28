@@ -21,11 +21,12 @@ input:-moz-placeholder {
 }
 
 .dom-container {
-  background-color: #ffffff;
   height: 100%;
+  width: 100%;
   color: #3b414d;
   font-family: sans-serif;
   letter-spacing: 0.03em;
+  background-color: #ffffff;
 }
 
 .wrapper {
@@ -194,7 +195,7 @@ header .left img {
 
 .col-left .messages li {
   padding-top: 15px;
-  width: 100%;
+  width: auto;
   display: block;
   overflow: hidden;
   padding-left: 20px;
@@ -218,7 +219,7 @@ header .left img {
   bottom: 2px;
   right: 2px;
   border-radius: 100%;
-  border: 3px solid #ffffff; 
+  border: 3px solid #ffffff;
 }
 .col-left .messages li .avatar img {
   width: 36px;
@@ -416,7 +417,7 @@ main {
 }
 
 .col-message-sent,
-.col-message-received {  
+.col-message-received {
   margin-top: 0.25em !important;
 }
 
@@ -454,18 +455,27 @@ main {
 
 .compose {
   padding: 20px;
-  position: relative;
+  /* position: relative; */
+  display: flex;
+  gap: 20px;
 }
 .compose input {
-  width: 600px;
+  width: 100%;
   border: 0px;
   font-size: 17px;
   padding-right: 80px;
+  outline: none;
 }
-.compose .compose-dock .dock {
+/* .compose .compose-dock .dock {
   position: absolute;
   right: 25px;
   top: 20px;
+} */
+.dock {
+  display: flex;
+}
+.msg-input {
+  width: 100%;
 }
 .compose .compose-dock img {
   width: 20px;

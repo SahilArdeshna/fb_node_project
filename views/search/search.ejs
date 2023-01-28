@@ -9,34 +9,39 @@
 
     <div class="body-content">
       <div class="bodyn">
-        <a href="/admin/<%= user._id %>">
-          <div id="side1" class="bodyn">
-            <img src="<%= user.profileImage %>" id="profpic" />
-            <span><%= user.firstname %></span>
-          </div>
-        </a>
-        <div id="side3" class="bodyn">News feed</div>
-        <div id="side4" class="bodyn">Messages</div>
-        <div id="side5" class="bodyn">Events</div>
-        <div id="side6" class="bodyn">PAGES</div>
-        <div id="side7" class="bodyn">Pages feed</div>
-        <div id="side8" class="bodyn">Like pages</div>
-        <div id="side9" class="bodyn">Create page</div>
-        <div id="side10" class="bodyn">Create ad</div>
-        <div id="side11" class="bodyn">GROUPS</div>
-        <div id="side12" class="bodyn">New groups</div>
-        <div id="side13" class="bodyn">Create group</div>
-        <div id="side14" class="bodyn">APPS</div>
-        <div id="side15" class="bodyn">Games</div>
-        <div id="side16" class="bodyn">On this day</div>
-        <div id="side17" class="bodyn">Games feed</div>
-        <div id="side18" class="bodyn">FRIENDS</div>
-        <div id="side19" class="bodyn">Close friends</div>
-        <div id="side20" class="bodyn">Family</div>
-        <div id="side21" class="bodyn">INTERESTS</div>
-        <div id="side22" class="bodyn">Pages and public</div>
-        <div id="side23" class="bodyn">EVENTS</div>
-        <div id="side24" class="bodyn">Create event</div>
+        <div class="bodyn-div">
+          <a href="/admin/<%= user._id %>">
+            <div id="side1" class="">
+              <img
+                src="<%= user.profileImage || defaultImage %>"
+                id="profpic"
+              />
+              <span><%= user.firstname %></span>
+            </div>
+          </a>
+          <div id="side3" class="">News feed</div>
+          <div id="side4" class="">Messages</div>
+          <div id="side5" class="">Events</div>
+          <div id="side6" class="">PAGES</div>
+          <div id="side7" class="">Pages feed</div>
+          <div id="side8" class="">Like pages</div>
+          <div id="side9" class="">Create page</div>
+          <div id="side10" class="">Create ad</div>
+          <div id="side11" class="">GROUPS</div>
+          <div id="side12" class="">New groups</div>
+          <div id="side13" class="">Create group</div>
+          <div id="side14" class="">APPS</div>
+          <div id="side15" class="">Games</div>
+          <div id="side16" class="">On this day</div>
+          <div id="side17" class="">Games feed</div>
+          <div id="side18" class="">FRIENDS</div>
+          <div id="side19" class="">Close friends</div>
+          <div id="side20" class="">Family</div>
+          <div id="side21" class="">INTERESTS</div>
+          <div id="side22" class="">Pages and public</div>
+          <div id="side23" class="">EVENTS</div>
+          <div id="side24" class="">Create event</div>
+        </div>
       </div>
 
       <div class="post">
@@ -46,7 +51,10 @@
           <div class="friend-container">
             <div class="user-image">
               <a class="user-link" href="/admin/<%= uf._id %>">
-                <img class="user-image-link" src="<%= uf.profileImage %>" />
+                <img
+                  class="user-image-link"
+                  src="<%= uf.profileImage || defaultImage %>"
+                />
               </a>
             </div>
             <div class="search-user-data">
@@ -131,7 +139,10 @@
                     value="<%= friend._id %>"
                   />
                   <div id="status" class="status offline"></div>
-                  <img src="/<%= friend.profileImage %>" height="30" />
+                  <img
+                    src="/<%= friend.profileImage || defaultImage %>"
+                    height="30"
+                  />
                 </div>
                 <div id="chatnamebox">
                   <%= friend.firstname %> <%= friend.surname %>
@@ -151,6 +162,10 @@
     <% } %>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/socket.js"></script>
+    <script
+      src="/js/socket.js"
+      id="socket-script"
+      data-appUrl="<%= appUrl %>"
+    ></script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const Messege = require('../models/Messege');
+const Messege = require("../models/Messege");
 
 exports.getMesseges = async (req, res, next) => {
   const userMessengerId = req.params.id;
@@ -14,9 +14,10 @@ exports.getMesseges = async (req, res, next) => {
       userFriends: obj.userFriends,
       chatUser: obj.chatUser,
       chatHistory: obj.chatHistory,
-      numOfNotification: obj.numOfNotification
+      appUrl: process.env.APP_URL,
+      numOfNotification: obj.numOfNotification,
+      defaultImage: "images/profile-images/default-profile.png",
     });
-
   } catch (err) {
     const error = new Error(err);
     error.statusCode = 500;
@@ -37,9 +38,8 @@ exports.getChatUser = async (req, res, next) => {
       userFriends: obj.userFriends,
       chatUser: obj.chatUser,
       chatHistory: obj.chatHistory,
-      numOfNotification: obj.numOfNotification
+      numOfNotification: obj.numOfNotification,
     });
-
   } catch (err) {
     const error = new Error(err);
     error.statusCode = 500;
@@ -54,12 +54,11 @@ exports.postMessege = async (req, res, next) => {
   const messege = new Messege({
     sender,
     receiver,
-    messege: messegeData
+    messege: messegeData,
   });
 
   try {
-    await messege.save();    
-    
+    await messege.save();
   } catch (err) {
     const error = new Error(err);
     error.statusCode = 500;
@@ -83,15 +82,22 @@ const userMessegeDetail = async (userMessengerId, userId) => {
       throw error;
     }
 
-    const msgSend = await Messege.find({ sender: userId, receiver: userMessengerId });
-    const msgReceive = await Messege.find({ sender: userMessengerId, receiver: userId });
+    const msgSend = await Messege.find({
+      sender: userId,
+      receiver: userMessengerId,
+    });
+    const msgReceive = await Messege.find({
+      sender: userMessengerId,
+      receiver: userId,
+    });
 
-    const userFriends = await User.find({ _id: { $in: user.friends } }).sort({ createdAt: -1 });
+    const userFriends = await User.find({ _id: { $in: user.friends } }).sort({
+      createdAt: -1,
+    });
     const numOfNotification = user.notification.length;
 
-
     const chatHistory = msgSend.concat(msgReceive);
-    chatHistory.forEach(chat => {
+    chatHistory.forEach((chat) => {
       chat.createdAt = Date.parse(chat.createdAt);
     });
 
@@ -100,14 +106,13 @@ const userMessegeDetail = async (userMessengerId, userId) => {
     });
 
     return {
-      title: 'Messenger',
+      title: "Messenger",
       user,
       userFriends,
       chatUser,
       numOfNotification,
-      chatHistory
-    }   
-    
+      chatHistory,
+    };
   } catch (err) {
     const error = new Error(err);
     if (!err.statusCode) {

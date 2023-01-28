@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const FriendRequest = require('../models/FriendRequest');
+const FriendRequest = require("../models/FriendRequest");
 
 exports.getNotification = async (req, res, next) => {
   try {
@@ -9,10 +9,10 @@ exports.getNotification = async (req, res, next) => {
       error.statusCode = 404;
       throw error;
     }
-    
+
     let requestedUser;
     if (user.notification.length > 0) {
-      const userIds = user.notification.map(notif => {
+      const userIds = user.notification.map((notif) => {
         if (notif._id && notif.status === "friend request") {
           return notif.requester;
         }
@@ -22,15 +22,15 @@ exports.getNotification = async (req, res, next) => {
       if (!notifUser) {
         const error = new Error("User not found!");
         error.statusCode = 404;
-        throw error;  
+        throw error;
       }
-    
-      const userObj = notifUser.map(user => {
+
+      const userObj = notifUser.map((user) => {
         return {
           firstname: user.firstname,
           surname: user.surname,
           _id: user._id,
-          profileImage: user.profileImage
+          profileImage: user.profileImage,
         };
       });
 
@@ -42,9 +42,11 @@ exports.getNotification = async (req, res, next) => {
     res.render("notification/notification", {
       title: "Your Notification",
       user,
-      requestedUser: requestedUser || '',
+      requestedUser: requestedUser || "",
       numOfNotification: "",
-      userFriends: users
+      userFriends: users,
+      appUrl: process.env.APP_URL,
+      defaultImage: "images/profile-images/default-profile.png",
     });
   } catch (err) {
     const error = new Error(err);
@@ -59,24 +61,29 @@ exports.rejectRequest = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
     if (!user) {
-      const error = new Error('User not found!');
+      const error = new Error("User not found!");
       error.statusCode = 404;
       throw error;
     }
-    
-    const friendReq = user.notification.filter(un => {
-      if (un.requester.toString() === requesterId.toString() && un.status === 'friend request') {
+
+    const friendReq = user.notification.filter((un) => {
+      if (
+        un.requester.toString() === requesterId.toString() &&
+        un.status === "friend request"
+      ) {
         return un;
       }
     });
 
     user.notification.pop(friendReq);
     await user.save();
-    await FriendRequest.deleteMany({ requester: friendReq[0].requester, requestTo: user._id });
+    await FriendRequest.deleteMany({
+      requester: friendReq[0].requester,
+      requestTo: user._id,
+    });
 
-    res.redirect('/notification');
-
-  } catch(err) {
+    res.redirect("/notification");
+  } catch (err) {
     const error = new Error(err);
     error.statusCode = 500;
     return next(error);
@@ -89,36 +96,39 @@ exports.acceptRequest = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
     if (!user) {
-      const error = new Error('User not found!');
+      const error = new Error("User not found!");
       error.statusCode = 404;
       throw error;
     }
-  
-    
-    const friendReq = user.notification.filter(un => {
-      if (un.requester.toString() === requesterId.toString() && un.status === 'friend request') {
+
+    const friendReq = user.notification.filter((un) => {
+      if (
+        un.requester.toString() === requesterId.toString() &&
+        un.status === "friend request"
+      ) {
         return un;
       }
     });
-    
+
     user.notification.pop(friendReq);
     user.friends.push(requesterId);
     await user.save();
 
     const requester = await User.findById(requesterId);
     if (!requester) {
-      const error = new Error('User not found!');
+      const error = new Error("User not found!");
       error.statusCode = 404;
       throw error;
     }
 
     requester.friends.push(user._id);
     await requester.save();
-    await FriendRequest.deleteMany({ requester: requesterId, requestTo: user._id });
+    await FriendRequest.deleteMany({
+      requester: requesterId,
+      requestTo: user._id,
+    });
 
-
-    res.redirect('/notification');
-
+    res.redirect("/notification");
   } catch (err) {
     const error = new Error(err);
     error.statusCode = 500;

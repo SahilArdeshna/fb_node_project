@@ -61,25 +61,26 @@
 .rej-acc button {
   width: 100%;
   padding: 5px;
-  border-radius: 2px;
+  border-radius: 5px;
   cursor: pointer;
+  color: white;
 }
 .rej-acc form:first-child {
   margin-right: 5px;
 }
 
 .reject {
-  background-color: #fa8072;
+  background-color: rgb(225 29 72);
 }
 
 .accept {
-  background-color: #90ee90;
+  background-color: rgb(22 163 74);
 }
 
 .reject:hover {
-  background-color: #fa8072;
+  background-color: rgb(238, 7, 57);
 }
 
 .accept:hover {
-  background-color: #90ee90;
+  background-color: rgb(9, 143, 58);
 }

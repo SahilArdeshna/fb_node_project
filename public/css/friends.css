@@ -46,6 +46,11 @@
   width: 100%;
 }
 
+.all-friends {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 ul {
   margin: 0px;
   padding: 0px;
@@ -53,7 +58,6 @@ ul {
 }
 
 .single-friend {
-  width: 47%;
   display: inline-flex;
   margin: 13px;
   border: 1px solid #e9ebee;
@@ -86,4 +90,8 @@ ul {
 .friend-request,
 .friend-request button {
   padding: 5px;
+}
+
+.no-friends {
+  padding-left: 20px;
 }

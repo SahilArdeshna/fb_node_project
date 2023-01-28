@@ -9,10 +9,13 @@
 
     <div class="body-content">
       <div class="bodyn">
-        <div>
+        <div class="bodyn-div">
           <a href="/admin/<%= user._id %>">
             <div id="side1" class="bodyn">
-              <img src="<%= user.profileImage %>" id="profpic" />
+              <img
+                src="<%= user.profileImage || defaultImage %>"
+                id="profpic"
+              />
               <span> <%= user.firstname %> </span>
             </div>
           </a>
@@ -37,7 +40,9 @@
           <div id="side21">INTERESTS</div>
           <div id="side22">Pages and public</div>
           <div id="side23">EVENTS</div>
-          <div id="side24"><div>Create event</div></div>
+          <div id="side24">
+            <div>Create event</div>
+          </div>
         </div>
       </div>
 
@@ -57,7 +62,7 @@
               <input type="file" name="image" />
             </div>
             <div id="postpos" class="post">
-              <button type="submit" id="buttonpost">post</button>
+              <button type="submit" id="buttonpost">Post</button>
             </div>
             <div id="postboxpos" class="post">
               <textarea
@@ -75,7 +80,10 @@
           <div class="feed">
             <div class="clean-top">
               <div class="flex">
-                <img src="/<%= feed.user.profileImage %>" id="profpic-feed" />
+                <img
+                  src="/<%= feed.user.profileImage || defaultImage %>"
+                  id="profpic-feed"
+                />
                 <div class="filter">
                   <p3> <%= feed.user.firstname %> <%= feed.user.surname %> </p3>
                 </div>
@@ -109,7 +117,7 @@
                     href="/admin/<%= commentUserMap.get(comment.commenter.toString())._id %>"
                   >
                     <img
-                      src="<%= commentUserMap.get(comment.commenter.toString()).profileImage %>"
+                      src="<%= commentUserMap.get(comment.commenter.toString()).profileImage || defaultImage %>"
                       id="profpic"
                     />
                   </a>
@@ -130,7 +138,10 @@
               <% } %> <% }) %> <% } %>
               <div id="commentprof2">
                 <div class="comment-image">
-                  <img src="<%= user.profileImage %>" id="profpic" />
+                  <img
+                    src="<%= user.profileImage || defaultImage %>"
+                    id="profpic"
+                  />
                 </div>
                 <form class="commente-form" action="/comment" method="POST">
                   <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
@@ -174,7 +185,10 @@
                     value="<%= friend._id %>"
                   />
                   <div id="status" class="status offline"></div>
-                  <img src="<%= friend.profileImage %>" height="30" />
+                  <img
+                    src="<%= friend.profileImage || defaultImage %>"
+                    height="30"
+                  />
                 </div>
                 <div
                   id="chatnamebox"
@@ -196,6 +210,10 @@
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/socket.js"></script>
+    <script
+      src="/js/socket.js"
+      id="socket-script"
+      data-appUrl="<%= appUrl %>"
+    ></script>
   </body>
 </html>

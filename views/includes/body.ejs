@@ -20,7 +20,7 @@
     <div class="nav-bar">
       <div id="profilearea" class="">
         <a href="/admin/<%= user._id %>"
-          ><img src="/<%= user.profileImage %>" id="profpic"
+          ><img src="/<%= user.profileImage || defaultImage %>" id="profpic"
         /></a>
       </div>
       <div id="profilearea1" class="">

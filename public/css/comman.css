@@ -20,15 +20,14 @@
   font-size: 13px;
   display: flex;
   left: 0px;
-  width: 30px;
-  height: 30px;
+  width: 100%;
 }
 #commentprof2 input {
-  width: 465px;
+  /* width: 465px; */
   margin-left: 10px;
 }
 #commentbox {
-  width: 480px;
+  /* width: 480px; */
   padding: 0;
   height: 30px;
   background-color: #f2f3f5;
@@ -38,6 +37,7 @@
 }
 .commente-form {
   display: flex;
+  width: 100%;
 }
 .comment-image {
   width: 30px;
@@ -173,10 +173,11 @@
 }
 .filter {
   font-size: 15px;
-  width: inherit;
+  width: 100%;
   display: flex;
   padding-top: 5px;
   margin-left: 10px;
+  justify-content: space-between;
 }
 .filter p1,
 .filter p2 {
@@ -184,8 +185,6 @@
   margin-left: 5px;
 }
 .form {
-  position: relative;
-  left: 300px;
 }
 .form button {
   width: 100px;
