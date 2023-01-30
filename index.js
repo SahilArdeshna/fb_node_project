@@ -46,7 +46,7 @@ app.use(csrfProtection);
 app.use(flash());
 
 app.set("view engine", "ejs");
-app.set("views", "./views");
+// app.set("views", "./views");
 
 app.use(async (req, res, next) => {
   if (!req.session.user) {
