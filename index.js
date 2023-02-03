@@ -32,8 +32,8 @@ const csrfProtection = csrf();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ extended: false }));
-app.use(express.static("public"));
-app.use("/images", express.static("images"));
+app.use(express.static(__dirname + "/public"));
+app.use("/images", express.static(__dirname + "/images"));
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
