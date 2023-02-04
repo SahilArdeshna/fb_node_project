@@ -22,7 +22,7 @@ const checkOnlieStatus = async () => {
 
   setInterval(() => {
     socket.emit("checkUsersStatus", result.user.friends);
-  }, 1);
+  }, 5000);
 
   socket.on("onlineUsers", (data) => {
     friendsMap.clear();

@@ -1,5 +1,4 @@
 const fs = require("fs");
-
 const { validationResult } = require("express-validator");
 
 const Feed = require("../models/Feed");
