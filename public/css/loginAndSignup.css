@@ -66,6 +66,7 @@ body {
   background-color: #084b8a;
   color: white;
   border: 1px solid #08298a;
+  cursor: pointer;
 }
 .signup-form {
   gap: 10px;

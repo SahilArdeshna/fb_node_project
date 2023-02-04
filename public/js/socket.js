@@ -1,4 +1,4 @@
-const socket = io({ allowEIO3: true });
+const socket = io();
 
 const msgSender = document.querySelector(".user-id").value;
 const appUrl = document
