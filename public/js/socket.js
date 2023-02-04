@@ -1,9 +1,9 @@
-const socket = io();
-
 const msgSender = document.querySelector(".user-id").value;
 const appUrl = document
   .getElementById("socket-script")
   .getAttribute("data-appUrl");
+
+const socket = io(appUrl);
 
 let msgReceiver;
 const friendId = document.querySelector(".friend-id");

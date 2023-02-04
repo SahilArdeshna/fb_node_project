@@ -1,10 +1,10 @@
-const socket = io();
-
 const msgSender = document.querySelector(".userId").value;
 const csrfToken = document.querySelector(".csrf").value;
 const appUrl = document
   .getElementById("message-script")
   .getAttribute("data-appUrl");
+
+const socket = io(appUrl);
 
 let msgReceiver = window.location.href.replace(`${appUrl}/messeges/`, "");
 const usersMessages = [];

@@ -96,13 +96,9 @@ mongoose.connect(process.env.MONGODB_URL, parser, () => {
     console.log("Server is up!");
   });
 
-  const io = require("socket.io").listen(server, {
-    cors: {
-      origin: "https://fb-node-project.vercel.app",
-      methods: ["GET", "POST"],
-      transports: ["websocket", "polling"],
-      credentials: true,
-    },
+  const { Server: SocketServer } = require("socket.io");
+
+  const io = new SocketServer(server, {
     allowEIO3: true,
   });
 
