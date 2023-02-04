@@ -14,11 +14,11 @@
     <body>
         <div id="header_wrapper">
             <div id="header">
-                <li id="sitename"><a href=<%= appUrl %>fb</a></li>
+                <li id="sitename"><a href="<%= appUrl %>">fb</a></li>
                 <form action="/login" method="POST">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <li>Email or Phone<br><input type="text" name="email"></li>
-                    <li>Password<br><input type="password" name="password"><br><a href="">Forgotten account?</a></li>
+                    <li>Password<br><input type="password" name="password"></li>
                     <li><input type="submit" name="login" value="Log In"></li>
                 </form>
             </div>
@@ -34,19 +34,19 @@
                 <% } %>
                 <h1>Create an account</h1>
                 <p>It's free and always will be.</p>
-                <form action="/signup" method="POST">
-                    <li>
+                <form action="/signup" method="POST" class="signup-form">
+                    <div class="name-info">
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <input type="text" name="firstname" value="<%= oldInput.firstname %>" placeholder="First Name" id="firstname">
                         <input type="text" name="surname" value="<%= oldInput.surname %>" placeholder="Surname" id="surname">
-                    </li>
-                    <li>
+                    </div>
+                    <div>
                         <input type="email" name="email" value="<%= oldInput.email %>" placeholder="Email address">
-                    </li>                    
-                    <li>
+                    </div>                    
+                    <div>
                         <input type="password" name="password" value="<%= oldInput.password %>" placeholder="New password">
-                    </li>
-                    <p>Birthday</p>
+                    </div>
+                    <!-- <p>Birthday</p>
                     <li>
                         <select>
                             <option>Day</option>
@@ -62,12 +62,13 @@
                     <li>
                         <input type="radio">Female 
                         <input type="radio">Male
-                    </li>
-                    <li id="terms">By clicking Create an account, you agree to our <a href="">Terms</a> and that <br>you
-                        have read our <a href="">Data Policy</a>, including our <a href="">Cookie Use</a>.</li>
-                    <li><button type="submit">Create an account</button>
+                    </li> -->
+                    <div id="terms">By clicking Create an account, you agree to our <a href="">Terms</a> and that <br>you
+                        have read our <a href="">Data Policy</a>, including our <a href="">Cookie Use</a>.
+                    </div>
+                    <div><button type="submit">Create an account</button></div>
                 </form>                
-                <li id="create_page"><a href="">Create a Page</a> for a celebrity, band or business.</li>
+                <!-- <li id="create_page"><a href="">Create a Page</a> for a celebrity, band or business.</li> -->
             </div>
         </div>
         <div id="footer_wrapper">
